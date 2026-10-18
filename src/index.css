@@ -26,14 +26,41 @@ button {
   cursor: pointer;
 }
 
+main,
+section,
+footer,
+aside,
+article,
+div,
+h1,
+h2,
+h3,
+p,
+span,
+a,
+button,
+select,
+svg,
+path,
+circle,
+ellipse {
+  transition:
+    background-color 0.65s ease,
+    border-color 0.65s ease,
+    color 0.65s ease,
+    box-shadow 0.65s ease,
+    fill 0.65s ease,
+    stroke 0.65s ease;
+}
+
 .font-display {
   font-family: 'Playfair Display', Georgia, serif;
 }
 
 .heart-grid {
   background-image:
-    radial-gradient(circle at center, #ed78a8 1.4px, transparent 1.5px),
-    linear-gradient(135deg, transparent 48%, #ffd3e4 49%, #ffd3e4 51%, transparent 52%);
+    radial-gradient(circle at center, var(--grid-dot, #ed78a8) 1.4px, transparent 1.5px),
+    linear-gradient(135deg, transparent 48%, var(--grid-line, #ffd3e4) 49%, var(--grid-line, #ffd3e4) 51%, transparent 52%);
   background-size: 30px 30px, 80px 80px;
 }
 
