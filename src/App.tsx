@@ -350,10 +350,11 @@ export default function App() {
     };
   }, [monthOffset]);
 
-  const handleConfirmDate = async () => {
-    if (!selectedDate || confirmStatus === "sending") return;
+  const handleConfirmDate = async (dayOverride?: number) => {
+    const dayToConfirm = dayOverride ?? selectedDate;
+    if (!dayToConfirm || confirmStatus === "sending") return;
     playSongAtIndex(4);
-    const formattedDate = `${calendar.name} ${selectedDate}, ${calendar.year}`;
+    const formattedDate = `${calendar.name} ${dayToConfirm}, ${calendar.year}`;
     setConfirmStatus("sending");
 
     try {
@@ -364,23 +365,27 @@ export default function App() {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          _subject: `💖 She picked a date: ${formattedDate}!`,
-          Date_Selected: formattedDate,
-          Message: `Your girlfriend just confirmed your next cute date for ${formattedDate}! Time to bring the plans, the snacks, and one million kisses.`,
+          _subject: `💖 Samiksha picked a date: ${formattedDate}!`,
+          _captcha: "false",
           _template: "table",
+          From: "Samiksha 💖",
+          Date_Selected: formattedDate,
+          Message: `Samiksha just confirmed your next cute date for ${formattedDate}! Time to bring the plans, the snacks, and one million kisses.`,
         }),
       });
 
-      if (response.ok) {
+      const data = (await response.json().catch(() => null)) as { success?: string | boolean; message?: string } | null;
+
+      if (response.ok && data?.success !== "false" && data?.success !== false) {
         setConfirmStatus("sent");
       } else {
-        throw new Error("Failed to send");
+        throw new Error(data?.message || "Failed to send");
       }
     } catch {
       setConfirmStatus("error");
-      const subject = encodeURIComponent(`💖 Our Next Cute Date: ${formattedDate}!`);
+      const subject = encodeURIComponent(`💖 Samiksha's Date Pick: ${formattedDate}!`);
       const body = encodeURIComponent(
-        `Hey! I picked our next cute date: ${formattedDate} 💕 Can't wait!`
+        `Hey Vignesh! I picked our next cute date: ${formattedDate} 💕 Can't wait!`
       );
       window.location.href = `mailto:vigneshmhatre474@gmail.com?subject=${subject}&body=${body}`;
     }
@@ -568,7 +573,7 @@ export default function App() {
                   </div>
                   <button
                     type="button"
-                    onClick={handleConfirmDate}
+                    onClick={() => handleConfirmDate()}
                     disabled={confirmStatus === "sending" || confirmStatus === "sent"}
                     className="inline-flex cursor-pointer items-center gap-2 rounded-full border-2 border-[#b91f61] bg-white px-6 py-3 text-xs font-black uppercase tracking-[0.18em] text-[#c82269] shadow-[5px_5px_0_#d92873] transition hover:-translate-y-1 hover:bg-[#f0448c] hover:text-white disabled:cursor-not-allowed disabled:opacity-80"
                   >
@@ -603,6 +608,23 @@ export default function App() {
                   </button>
                 ))}
               </div>
+              {selectedDate && (
+                <div className="mt-6 border-t-2 border-[#ffd1e3] pt-5 text-center">
+                  <button
+                    type="button"
+                    onClick={() => handleConfirmDate()}
+                    disabled={confirmStatus === "sending" || confirmStatus === "sent"}
+                    className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border-2 border-[#b91f61] bg-[#f0448c] px-6 py-3.5 text-xs font-black uppercase tracking-[0.18em] text-white shadow-[4px_4px_0_#8f1849] transition hover:-translate-y-0.5 hover:bg-[#d92873] disabled:cursor-not-allowed disabled:opacity-80"
+                  >
+                    <Heart className="w-4 text-[#ffd5e5]" />
+                    {confirmStatus === "sending"
+                      ? "Sending to Vignesh..."
+                      : confirmStatus === "sent"
+                        ? `Confirmed ${calendar.name} ${selectedDate}! 💖`
+                        : `Lock In ${calendar.name} ${selectedDate} 💖`}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </section>
