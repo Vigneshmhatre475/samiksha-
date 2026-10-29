@@ -1,5 +1,9 @@
 {
-  "description": "Create a personalized romantic landing page filled with vibrant colors, adorable animations, and a calendar for date planning, celebrating your loved one.",
+  "title": "Samiksha 💖",
+  "description": "Made with a ridiculous amount of love, just for you.",
+  "icons": {
+    "icon": "/favicon.svg?v=2"
+  },
   "robots": {
     "index": false
   },
