@@ -175,9 +175,9 @@ const compliments = [
 ];
 
 const photoCards = [
-  { label: "Highlight of the week", caption: "That moment I keep replaying", tone: "bg-[#ffd0e5]", image: "/photos/photo-1.jpg", songIndex: 0 },
-  { label: "My fashion week pick", caption: "Obviously, you won again", tone: "bg-[#ffc1db]", image: "/photos/photo-2.jpg", songIndex: 2 },
-  { label: "Cutest memory", caption: "One for our forever folder", tone: "bg-[#ffe0ec]", image: "/photos/photo-3.jpg", songIndex: 3 },
+  { label: "Highlight of the week", caption: "That moment I keep replaying", tone: "bg-[#ffd0e5]", image: "/photos/photo-1.png?v=2", songIndex: 0 },
+  { label: "My fashion week pick", caption: "Obviously, you won again", tone: "bg-[#ffc1db]", image: "/photos/photo-2.png?v=2", songIndex: 2 },
+  { label: "Cutest memory", caption: "One for our forever folder", tone: "bg-[#ffe0ec]", image: "/photos/photo-3.jpg?v=2", songIndex: 3 },
 ];
 
 const favoriteThings = {
